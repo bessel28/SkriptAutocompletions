@@ -59,7 +59,7 @@ function checkNonExistingFunctionCall(session: Session, script: Script, source: 
 		const func = session.registryHandler.getFunction(call.name);
 		if (!func) {
 			diagnostics.push({
-				code: "",
+				code: "NO_SKRIPT_FUNCTION",
 				message: `Function '${call.name}' does not exist`,
 				range: call.range,
 				severity: DiagnosticSeverity.Error,
