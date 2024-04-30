@@ -23,7 +23,7 @@ export class addFunctionAction implements CodeActionProvider {
 	}
 }	
 
-export function addFunction(context: ExtensionContext, config: WorkspaceConfiguration){
+export function addFunction(context: ExtensionContext){
 	// Register the code action provider
 	context.subscriptions.push(
 		languages.registerCodeActionsProvider('skript', new addFunctionAction())
