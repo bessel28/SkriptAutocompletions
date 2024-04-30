@@ -1,4 +1,4 @@
-import { ExtensionContext, WorkspaceFolder, commands, languages, workspace } from "vscode";
+import { ExtensionContext, WorkspaceFolder, workspace } from "vscode";
 import { Session } from "./session/index";
 import { fixPath } from "./utilities/fsWrapper";
 import { colorPicker } from "./features/colorPicker";

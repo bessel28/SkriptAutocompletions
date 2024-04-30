@@ -58,13 +58,16 @@ function checkNonExistingFunctionCall(session: Session, script: Script, source: 
 		if (BUILT_IN_FUNCTIONS.includes(call.name)) continue;
 		const func = session.registryHandler.getFunction(call.name);
 		if (!func) {
-			diagnostics.push({
-				code: "NO_SKRIPT_FUNCTION",
-				message: `Function '${call.name}' does not exist`,
-				range: call.range,
-				severity: DiagnosticSeverity.Error,
-				source: "",
-			});
+			const fakeFunc = session.registryHandler.getFakeFunction(call.name);
+			if (!fakeFunc) {
+				diagnostics.push({
+					code: "NO_SKRIPT_FUNCTION",
+					message: `Function '${call.name}' does not exist`,
+					range: call.range,
+					severity: DiagnosticSeverity.Error,
+					source: "",
+				});
+			}
 		}
 	}
 }

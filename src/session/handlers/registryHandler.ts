@@ -83,6 +83,15 @@ export class RegistryHandler {
 		}
 	}
 
+	/** Undefined but added functions */
+	getFakeFunction(name: string): String | void {
+		for (const f of workspace.getConfiguration().get<String[]>("SkriptAutocompletions.functions", [])) {
+			if (f == name) {
+				return name;
+			}
+		}
+	}
+
 	getScript(path: string) {
 		return this.registry.get(fixPath(path));
 	}

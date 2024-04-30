@@ -1,4 +1,4 @@
-import { CancellationToken, CodeAction, CodeActionContext, CodeActionKind, CodeActionProvider, Command, commands, ExtensionContext, languages, ProviderResult, Range, Selection, TextDocument } from 'vscode';
+import { CancellationToken, CodeAction, CodeActionContext, CodeActionKind, CodeActionProvider, Command, commands, ConfigurationTarget, ExtensionContext, languages, ProviderResult, Range, Selection, TextDocument, workspace, WorkspaceConfiguration } from 'vscode';
 
 const DIAGNOSTIC_CODE = "NO_SKRIPT_FUNCTION";
 
@@ -13,7 +13,8 @@ export class addFunctionAction implements CodeActionProvider {
 		const fixAction = new CodeAction('Add function to dictionary', CodeActionKind.QuickFix);
         fixAction.command = {
             command: 'SkriptAutocompletions.addFunction',
-            title: 'Add function to dictionary'
+            title: 'Add function to dictionary',
+			arguments: [document, range]
         };
         return [fixAction];
 	}
@@ -22,18 +23,34 @@ export class addFunctionAction implements CodeActionProvider {
 	}
 }	
 
-export function addFunction(context: ExtensionContext){
-		// Register the code action provider
-		context.subscriptions.push(
-			languages.registerCodeActionsProvider('skript', new addFunctionAction())
-		);
-	
-		// Register the command handler for fixing the issue
-		context.subscriptions.push(
-			commands.registerCommand('SkriptAutocompletions.addFunction', () => {
-				console.log("it ran")
-				// Implement the logic to fix the issue
-				// For example, you might perform an automated code transformation
-			})
-		);
+export function addFunction(context: ExtensionContext, config: WorkspaceConfiguration){
+	// Register the code action provider
+	context.subscriptions.push(
+		languages.registerCodeActionsProvider('skript', new addFunctionAction())
+	);
+
+	// Register the command handler for fixing the issue
+	context.subscriptions.push(
+		commands.registerCommand('SkriptAutocompletions.addFunction', (document: TextDocument, range: Range) => 
+			addFunctionToConfig(document, range, config)
+		)
+	);
+}
+
+function addFunctionToConfig(document: TextDocument, range: Range) {
+	const config: WorkspaceConfiguration = workspace.getConfiguration();
+	var text = document.getText(range);
+	var funcs = config.get<String[]>("SkriptAutocompletions.functions");
+	if (funcs == null) funcs = []
+
+	text = text.replace(/(.*)\(.*\)/, "$1");
+
+	// if function already added
+	if (funcs.indexOf(text) > -1) return;
+
+	funcs.push(text);
+	config.update("SkriptAutocompletions.functions", funcs, ConfigurationTarget.Workspace);
+
+	console.log("Added " + text + " to funcs")
+	console.log(config.get<String[]>("SkriptAutocompletions.functions", []))
 }

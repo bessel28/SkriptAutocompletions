@@ -17,6 +17,7 @@ import {
 	TextDocument,
 	Uri,
 	languages,
+	workspace,
 } from "vscode";
 import { Session } from "..";
 import * as snippets from "../../snippets.json";
@@ -74,6 +75,7 @@ export class ProviderHandler {
 									if (!func.isPrivate) return true; // public
 									return func.script === activeScript;
 								});
+
 								functions.forEach((func) => {
 									const item = new CompletionItem(func.name + "()", CompletionItemKind.Function);
 
@@ -96,6 +98,14 @@ export class ProviderHandler {
 								});
 							});
 						}
+						var externalFuncs = workspace.getConfiguration().get<String[]>("SkriptAutocompletions.functions", [])
+
+						externalFuncs.forEach((func) =>
+							{
+								const item = new CompletionItem(func + "()", CompletionItemKind.Function);
+								item.detail = "from external addon";
+								items.push(item);
+							});
 
 						// Snippets
 						Object.keys(snippets).forEach((key) => {
