@@ -43,6 +43,12 @@
 					"type": "boolean",
 					"default": false,
 					"description": "Show inlay hints on function arguments."
+				},
+				"SkriptAutocompletions.functions": {
+					"items": {
+					  "type": "string"
+					},
+					"required": []
 				}
 			}
 		},
