@@ -32,7 +32,7 @@ export function addFunction(context: ExtensionContext, config: WorkspaceConfigur
 	// Register the command handler for fixing the issue
 	context.subscriptions.push(
 		commands.registerCommand('SkriptAutocompletions.addFunction', (document: TextDocument, range: Range) => 
-			addFunctionToConfig(document, range, config)
+			addFunctionToConfig(document, range)
 		)
 	);
 }
@@ -43,7 +43,7 @@ function addFunctionToConfig(document: TextDocument, range: Range) {
 	var funcs = config.get<String[]>("SkriptAutocompletions.functions");
 	if (funcs == null) funcs = []
 
-	text = text.replace(/(.*)\(.*\)/, "$1");
+	text = text.replace(/(.*?)\(.*\)/, "$1");
 
 	// if function already added
 	if (funcs.indexOf(text) > -1) return;
