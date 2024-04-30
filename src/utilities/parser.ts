@@ -125,7 +125,7 @@ export class Parser {
 		const calls = [];
 
 		const lines = source.split("\n");
-		const regex = /(?<!\bfunction\s+)\b(\w+)\(([^)]*)\)/g;
+		const regex = /(?<!\bfunction\s+)(?!\.)\b(\w+)\(([^)]*)\)/g;
 		let match;
 
 		lines.forEach((line, lineNumber) => {
