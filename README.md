@@ -1,3 +1,7 @@
+*[Forked from Ezzenix's repo](https://github.com/Ezzenix/SkriptAutocompletions)* to add:
+* SkReflect support (just ignores them)
+* Adds a QuickFix action to add functions that may be defined in java/skript addons
+
 # Skript Autocompletions
 
 Skript Autocompletes is a Visual Studio Code Extension that makes writing Minecraft Skript easier. The extension is not fully done yet so there may be bugs, if so please report them to me.

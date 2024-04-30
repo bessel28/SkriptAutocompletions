@@ -1,9 +1,9 @@
 {
 	"name": "skript-autocompletions",
-	"displayName": "Skript Autocompletions",
+	"displayName": "Skript Autocompletions - Bessel28 fork",
 	"description": "Provides autocompletions for Minecraft Skript",
 	"version": "0.2.8",
-	"publisher": "Ezzenix",
+	"publisher": "Bessel28",
 	"keywords": [
 		"skript",
 		"autocomplete",
@@ -16,7 +16,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/Ezzenix/SkriptAutocompletions"
+		"url": "https://github.com/bessel28/SkriptAutocompletions"
 	},
 	"categories": [
 		"Programming Languages",
